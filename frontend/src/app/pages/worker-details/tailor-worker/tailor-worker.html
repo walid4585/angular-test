@@ -1,0 +1,545 @@
+
+
+
+
+<!-- ============================================
+     ✅ Production
+============================================= -->
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>
+
+            Production
+
+        </h2>
+<div class="table-switch">
+
+    <button
+        class="primary-btn"
+        (click)="tableView.set('details')">
+
+        Details
+
+    </button>
+
+    <button
+        class="primary-btn"
+        (click)="tableView.set('summary')">
+
+        Summary
+
+    </button>
+
+</div>
+        <button
+            class="primary-btn"  (click)="openAddProductionModal()">
+
+            + Add Production
+
+        </button>
+
+    </div>
+@if (tableView() === 'details') {
+
+    <!-- ============================================
+         ✅ Details Table
+    ============================================= -->
+
+    <table class="production-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Work Type</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let item of production()">
+
+                <td>{{ item.workTypeName }}</td>
+
+                <td>{{ item.quantity }}</td>
+
+                <td>{{ item.price }} DA</td>
+
+                <td>{{ item.total }} DA</td>
+
+                <td>{{ item.productionDate }}</td>
+
+                <td>
+
+                    <div class="action-buttons">
+
+                        <button
+                            class="action-btn delete"
+                            (click)="openDeleteModal(item)"
+                            title="Delete Production">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="18"
+                                 height="18"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+
+                                <polyline points="3 6 5 6 21 6"/>
+
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+
+                            </svg>
+
+                        </button>
+
+                        <button
+                            class="action-btn edit"
+                            (click)="editProduction(item)"
+                            title="Edit Production">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="18"
+                                 height="18"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+
+                            </svg>
+
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+  <!-- ============================================
+     ✅ Grand Total
+============================================= -->
+
+<tr class="summary-total-row">
+
+    <td colspan="5">
+
+        <strong>📊Total Earned</strong>
+
+    </td>
+
+    <td>
+
+        <strong>
+
+            {{ summaryGrandTotal() }} DA
+
+        </strong>
+
+    </td>
+
+</tr>
+        </tbody>
+
+    </table>
+
+}
+    @if (tableView() === 'summary') {
+
+<!-- ============================================
+     ✅ Summary Table
+============================================= -->
+
+<table class="production-table">
+
+    <thead>
+
+        <tr>
+
+            <th>Work Type</th>
+
+            <th>Production History</th>
+
+            <th>Piece Price</th>
+
+            <th>Total Pieces</th>
+
+            <th>Total Amount</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        <tr *ngFor="let row of groupedProduction()">
+
+            <td>
+
+                {{ row.workTypeName }}
+
+            </td>
+
+            <td>
+
+                {{ row.quantities.join(' + ') }}
+
+            </td>
+
+            <td>
+
+                {{ row.piecePrice }} DA
+
+            </td>
+
+            <td>
+
+                {{ row.totalPieces }}
+
+            </td>
+
+            <td>
+
+                {{ row.totalAmount }} DA
+
+            </td>
+
+        </tr>
+
+    </tbody>
+ <!-- ============================================
+  ✅ Grand Total
+============================================= -->
+
+<tr class="summary-total-row">
+
+    <td colspan="4">
+
+        <strong>Total Earned</strong>
+
+    </td>
+
+    <td>
+
+        <strong>
+
+            {{ summaryGrandTotal() }} DA
+
+        </strong>
+
+    </td>
+
+</tr>
+
+</table>
+
+}
+
+</div>
+
+<!-- ============================================
+     ✅ Add Production Modal
+============================================= -->
+
+<div
+    class="modal-overlay"
+    *ngIf="showAddProductionModal()"
+    (click)="closeAddProductionModal()">
+
+    <div
+        class="modal-container"
+        (click)="$event.stopPropagation()">
+
+ <!-- ============================================
+✅ Modal Header
+============================================= -->
+
+        <div class="modal-header">
+
+           <h2>
+    {{ editingProduction() ? '✏️ Edit Production' : '🧵 Add Production' }}
+          </h2>
+
+            <button
+                class="modal-close"
+                (click)="closeAddProductionModal()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+ <!-- ============================================
+ ✅ Modal Body
+ ============================================= -->
+
+        <form>
+
+ <!-- ============================================
+ ✅ Work Type
+============================================= -->
+
+<div class="form-group">
+
+    <label>
+
+        Work Type
+
+    </label>
+
+    <select
+         
+        (change)="onWorkTypeChange($event)">
+
+        <option value="">
+
+            Select Work Type
+
+        </option>
+
+        @for (wt of workTypes(); track wt.id) {
+
+            <option
+                [selected]="wt.id === selectedWorkTypeId()"
+                [value]="wt.id">
+
+                {{ wt.name }}
+
+            </option>
+
+        }
+
+    </select>
+
+</div>
+            
+
+ <!-- ============================================
+  ✅ Quantity
+ ============================================= -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Quantity
+
+                </label>
+
+                <input
+    type="number"
+    placeholder="Enter quantity"
+    min="1"
+    [value]="quantity()"
+    (input)="onQuantityChange($event)">
+
+            </div>
+
+<!-- ============================================
+ ✅ Price Summary
+============================================= -->
+
+<div class="summary-row">
+
+    <div class="summary-card">
+
+        <span class="summary-label">
+
+            Piece Price
+
+        </span>
+
+        <span class="summary-value">
+
+            {{ selectedPiecePrice() }} DA
+
+        </span>
+
+    </div>
+
+    <div class="summary-card total-card">
+
+        <span class="summary-label">
+
+            Total
+
+        </span>
+
+        <span class="summary-value">
+
+            {{ totalAmount() }} DA
+
+        </span>
+
+    </div>
+
+</div>
+ <!-- ============================================
+  ✅ Note
+ ============================================= -->
+
+ <div class="form-group">
+
+                <label>
+
+                    Note
+
+                </label>
+
+                <textarea
+                    rows="3"
+                    placeholder="Optional..."
+                    [value]="notes()"
+                    (input)="onNotesChange($event)">
+
+                </textarea>
+
+ </div>
+
+ </form>
+
+ <!-- ============================================
+ ✅ Modal Footer
+ ============================================= -->
+         
+  <div class="modal-actions">
+
+            <button
+                type="button"
+                (click)="closeAddProductionModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+                type="button"
+                class="primary-btn" (click)="saveProduction()">
+
+                {{ editingProduction() ? 'Update Production' : 'Save Production' }}
+
+            </button>
+
+   </div>
+
+  </div>
+
+</div>
+<!-- ============================================
+     ✅ Delete Production Modal
+============================================= -->
+
+<div
+    class="modal-overlay"
+    *ngIf="showDeleteModal()"
+    (click)="closeDeleteModal()">
+
+    <div
+        class="modal"
+        (click)="$event.stopPropagation()">
+
+        <!-- Header -->
+
+        <div class="modal-header">
+
+            <h2>
+
+                Delete Production
+
+            </h2>
+
+            <button
+                class="modal-close"
+                (click)="closeDeleteModal()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <!-- Body -->
+
+        <div class="modal-body">
+
+            <p>
+
+                Are you sure you want to delete this production?
+
+            </p>
+
+            <div *ngIf="selectedProduction() as item">
+
+                <p>
+
+                    <strong>Work Type:</strong>
+
+                    {{ item.workTypeName }}
+
+                </p>
+
+                <p>
+
+                    <strong>Quantity:</strong>
+
+                    {{ item.quantity }}
+
+                </p>
+
+                <p>
+
+                    <strong>Total:</strong>
+
+                    {{ item!.total }} DA
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                (click)="closeDeleteModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+                type="button"
+                class="primary-btn danger-btn"
+                (click)="confirmDeleteProduction()">
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

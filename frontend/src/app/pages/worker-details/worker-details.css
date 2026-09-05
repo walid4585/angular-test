@@ -1,0 +1,895 @@
+/* ============================================
+   ✅ Page
+============================================ */
+:host {
+  display: block;
+  padding: 32px;
+  min-height: 100vh;
+  background: var(--glass-bg);
+}
+
+
+
+/* ============================================
+   ✅ Container
+============================================ */
+.worker-details-page {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ============================================
+   ✅ Header
+============================================ */
+.worker-header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ============================================
+   ✅ Back Button
+============================================ */
+.back-btn {
+  width: max-content;
+  padding: 10px 24px;
+  border: 1px solid var(--glass-border);
+  border-radius: 60px;
+  cursor: pointer;
+  background: var(--btn-primary);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateX(-4px);
+}
+
+/* ============================================
+   ✅ Worker Card
+============================================ */
+.worker-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 28px 32px;
+  border-radius: 32px;
+  background: var(--glass-second-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-soft);
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+}
+
+.worker-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8);
+}
+
+/* ============================================
+   ✅ Avatar
+============================================ */
+.worker-avatar {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: white;
+  background: var(--btn-primary);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.35);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.worker-avatar:hover {
+  transform: scale(1.05);
+}
+
+/* ============================================
+   ✅ Info
+============================================ */
+.worker-info {
+  flex: 1;
+}
+
+.worker-info h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.worker-info p {
+  margin: 6px 0;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 18px;
+  border-radius: 60px;
+  background: rgba(16, 185, 129, 0.2);
+  color: #a7f3d0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.3px;
+}
+
+
+
+
+
+
+
+
+/* ============================================
+   ✅ Summary Row (Price Summary)
+============================================ */
+.summary-row {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0 20px;
+}
+
+.summary-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 20px;
+  padding: 14px 18px;
+  flex: 1;
+  border: 1px solid var(--glass-border);
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+
+.summary-value {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.total-card {
+  background: rgba(102, 126, 234, 0.12);
+  border-color: rgba(102, 126, 234, 0.25);
+}
+
+
+/* ============================================
+   ✅ Danger Button
+============================================ */
+.danger-btn {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #fca5a5 !important;
+}
+
+.danger-btn:hover {
+  background: rgba(239, 68, 68, 0.35) !important;
+}
+
+
+
+/* ============================================
+   ✅ Inputs
+============================================ */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* ============================================
+   ✅ Focus Effect
+============================================ */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #818cf8;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+
+
+
+
+
+/* ============================================
+   ✅ Payments Section
+============================================ */
+.payment-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.payments-card {
+  position: relative;
+  background: var(--glass-second-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px 28px 28px 28px;
+  padding: 24px 28px;
+  box-shadow: var(--shadow-soft);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.card-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.count-badge {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 4px 16px;
+  border-radius: 60px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+}
+
+/* ============================================
+   ✅ Payments List
+============================================ */
+.payments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.payment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: all 0.3s ease;
+}
+
+.payment-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.payment-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.payment-icon {
+  font-size: 1.5rem;
+}
+
+.payment-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-amount {
+  font-weight: 600;
+  color: #34d399;
+}
+
+.payment-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.payment-date {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.payments-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background: rgba(16, 185, 129, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.payments-total strong {
+  color: #34d399;
+  font-size: 1.1rem;
+}
+
+/* ============================================
+   ✅ Empty State
+============================================ */
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-content svg {
+  color: rgba(255, 255, 255, 0.05);
+}
+
+.empty-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   ✅ Financial Summary
+============================================ */
+.summary-card {
+  background: var(--glass-second-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-soft);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.summary-item .label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-item .value {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.summary-item .value.due {
+  color: #60a5fa;
+}
+
+.summary-item .value.paid {
+  color: #34d399;
+}
+
+.summary-item.highlight {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.summary-item.debt-positive {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.summary-item.debt-negative {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.summary-item.debt-zero {
+  border-color: rgba(251, 146, 60, 0.3);
+  background: rgba(251, 146, 60, 0.05);
+}
+
+.summary-item .value.debt {
+  font-size: 1.4rem;
+}
+
+/* ============================================
+   ✅ Progress Bar
+============================================ */
+.progress-container {
+  margin-top: 8px;
+}
+
+.progress-bar-wrapper {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 60px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #a78bfa);
+  border-radius: 60px;
+  transition: width 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  min-width: 30px;
+}
+
+.progress-bar.complete {
+  background: linear-gradient(90deg, #34d399, #6ee7b7);
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.progress-label span:last-child {
+  color: var(--text-primary);
+}
+
+/* ============================================
+   ✅ Action Bar
+============================================ */
+.actions-bar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 0;
+}
+
+.actions-bar button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 60px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--btn-primary);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(102, 126, 234, 0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(102, 126, 234, 0.35);
+}
+
+.btn-print {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border) !important;
+  backdrop-filter: blur(4px);
+}
+
+.btn-print:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================================ */
+/* ====== Success State ====== */
+/* ============================================ */
+
+.success-box {
+  text-align: center;
+  padding: 48px 32px;
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(16, 185, 129, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 32px;
+  color: #34d399;
+}
+
+.success-box h2 {
+  margin: 0 0 8px 0;
+  color: #fff;
+  font-size: 22px;
+}
+
+.success-box p {
+  margin: 0 0 16px 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.success-details {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+.btn-cancel {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-save {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-save:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.btn-save:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ============================================ */
+/* ====== Responsive ====== */
+/* ============================================ */
+
+@media (max-width: 768px) {
+  .customer-container {
+    padding: 16px;
+  }
+
+  .page-header {
+    padding: 16px 20px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-title {
+    flex-wrap: wrap;
+  }
+
+  .avatar-large {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  
+  .card {
+    padding: 16px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .orders-table thead {
+    display: none;
+  }
+
+  .orders-table tbody td {
+    display: block;
+    padding: 8px 12px;
+    border: none;
+  }
+
+  .orders-table tbody td:before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .orders-table tbody tr {
+    display: block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 8px 0;
+  }
+
+  .orders-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .total-row td {
+    display: block !important;
+    text-align: center !important;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .actions-bar {
+    flex-direction: column;
+  }
+
+  .actions-bar button {
+    justify-content: center;
+  }
+  /* ============================================
+   ✅ Modal Container
+============================================ */
+.modal {
+  width: 520px;
+  max-width: 95%;
+  background: rgba(20, 18, 40, 0.92);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7);
+  animation: slideUp 0.3s ease;
+}
+
+  /* ============================================
+   ✅ Modal Overlay
+============================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+  .modal-container {
+    margin: 16px;
+  }
+  .modal-container {
+  background: var(--glass-second-bg);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 16px 20px;
+  }
+  .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+  .success-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* ============================================
+   ✅ Action Buttons
+============================================ */
+.action-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.action-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+  color: #fff;
+}
+
+.action-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.action-btn.edit:hover {
+  background: rgba(251, 146, 60, 0.2);
+  color: #fb923c;
+}
+
+.btn-primary,.btn-danger,
+.btn-secondary {
+
+  min-width: 150px;
+
+  height: 46px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all .25s ease;
+
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}

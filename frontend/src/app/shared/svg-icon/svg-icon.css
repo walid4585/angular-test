@@ -1,0 +1,22 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  line-height: 0;
+  color: inherit;
+  flex: 0 0 auto;
+}
+
+.svg-icon__inner {
+  display: inline-flex;
+  width: 60px;
+  height: 100%;
+}
+
+.svg-icon__inner :is(svg) {
+  width: 60px;
+  height: 60px;
+  display: block;
+}

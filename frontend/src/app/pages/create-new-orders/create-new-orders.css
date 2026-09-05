@@ -1,0 +1,643 @@
+/* ============================================
+   ✅ Add Order Component
+============================================ */
+:host {
+  display: block;
+  padding: 32px;
+
+}
+
+.add-order-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   ✅ Component Header
+============================================ */
+.component-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  padding: 24px 28px;
+  background: var(--glass-second-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+}
+
+.header-left h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: var(--btn-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  margin: 4px 0 0 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+}
+
+.icon-wrapper svg {
+  stroke: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.component-header:hover .icon-wrapper {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.component-header:hover .icon-wrapper svg {
+  stroke: var(--text-primary);
+}
+
+/* ============================================
+   ✅ Alerts
+============================================ */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  animation: slideIn 0.3s ease;
+  background: var(--glass-second-bg);
+  backdrop-filter: blur(8px);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-icon {
+  font-size: 1.2rem;
+}
+
+.alert.success {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+
+.alert.error {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+/* ============================================
+   ✅ Form Grid
+============================================ */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  background: var(--glass-second-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 28px 32px;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.form-grid:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+  font-family: inherit;
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+.form-group input::placeholder {
+  color: var(--text-secondary);
+}
+
+.form-group select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.5)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.form-group select option {
+  background: #1a1a2e;
+  color: white;
+}
+
+.form-group input.ng-invalid.ng-touched {
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.form-group input.ng-invalid.ng-touched:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+/* ============================================
+   ✅ Readonly Field
+============================================ */
+.readonly-field {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #34d399 !important;
+  font-weight: 600;
+  cursor: not-allowed;
+  border-color: rgba(52, 211, 153, 0.2) !important;
+}
+
+.readonly-field:focus {
+  box-shadow: none !important;
+  border-color: rgba(52, 211, 153, 0.2) !important;
+}
+
+/* ============================================
+   ✅ Form Actions
+============================================ */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.form-actions--full {
+  grid-column: 1 / -1;
+}
+
+/* ============================================
+   ✅ Buttons
+============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 28px;
+  border: none;
+  border-radius: 60px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--btn-primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-secondary {
+  background: var(--btn-primary);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.btn svg {
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+
+
+
+/* ============================================
+   ✅ Responsive
+============================================ */
+@media (max-width: 1024px) {
+  :host {
+    padding: 24px;
+  }
+
+  .form-grid {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    padding: 16px;
+  }
+
+  .component-header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+  }
+
+  .header-left h2 {
+    font-size: 1.4rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .icon-wrapper svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    padding: 12px;
+  }
+
+  .component-header {
+    padding: 16px;
+  }
+
+  .header-left h2 {
+    font-size: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .form-grid {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
+
+  .btn {
+    padding: 8px 20px;
+    font-size: 0.8rem;
+  }
+
+  .alert {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ============================================ */
+/* ====== Modal Overlay ====== */
+/* ============================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--glass-bg);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 9999;
+  
+}
+
+/* ============================================ */
+/* ====== Modal ====== */
+/* ============================================ */
+
+.modal {
+  width: 100%;
+  max-width: 650px;
+  background: var(--glass-second-bg);
+  
+  border-radius: 16px;
+  
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: modalFade .25s ease;
+}
+
+/* ============================================ */
+/* ====== Header ====== */
+/* ============================================ */
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #1e293b;
+}
+
+/* ============================================ */
+/* ====== Close Button ====== */
+/* ============================================ */
+
+.close-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background:var(--btn-primary);
+  cursor: pointer;
+  font-size: 18px;
+  transition: .2s;
+}
+
+.close-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* ============================================ */
+/* ====== Body ====== */
+/* ============================================ */
+
+.modal-body {
+  padding: 24px;
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+.modal-body > p {
+  margin-top: 0;
+  margin-bottom: 20px;
+  
+  color: #64748b;
+  
+}
+.modal-body::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================ */
+/* ====== Customer Card ====== */
+/* ============================================ */
+
+.customer-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  transition: .2s;
+}
+
+.customer-card:hover {
+  border-color: #2563eb;
+  transform: translateY(-2px);
+}
+
+/* ============================================ */
+/* ====== Customer Info ====== */
+/* ============================================ */
+
+.customer-info {
+  flex: 1;
+}
+
+.customer-info h3 {
+  margin: 0 0 10px;
+  color: #1e293b;
+  font-size: 18px;
+}
+
+.customer-info p {
+  margin: 6px 0;
+  color: #475569;
+}
+/* ============================================ */
+/* ====== Information Message ====== */
+/* ============================================ */
+
+.info-message {
+  margin-bottom: 16px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+/* ============================================ */
+/* ====== Warning Message ====== */
+/* ============================================ */
+
+.warning-message {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border-left: 4px solid #f59e0b;
+  background: #fffbeb;
+  border-radius: 8px;
+}
+
+.warning-message strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #b45309;
+}
+
+.warning-message p {
+  margin: 0;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+/* ============================================ */
+/* ====== Footer ====== */
+/* ============================================ */
+
+.modal-footer {
+  display: block;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* ============================================ */
+/* ====== Animation ====== */
+/* ============================================ */
+
+@keyframes modalFade {
+
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+}
+
+/* ============================================
+   ✅ Validation Error Message
+============================================ */
+.field-error {
+
+  display: block;
+
+  margin-top: 6px;
+
+  color: #ef4444;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+}
+.pending-orders {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.pending-orders-header,
+.pending-order {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pending-orders-header {
+  margin-bottom: 14px;
+}
+
+.pending-orders h3 {
+  margin: 0 0 4px;
+}
+
+.pending-orders-header span,
+.pending-order span {
+  display: block;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+}
+
+.pending-order {
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pending-order-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.remove-order {
+  border: 0;
+  background: transparent;
+  color: #fca5a5;
+  cursor: pointer;
+}
+.walkInCustomer{
+  display: flex;
+  width: 15px;
+  height: 15px;
+  background: red;
+}

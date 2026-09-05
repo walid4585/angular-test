@@ -1,0 +1,131 @@
+<section class="dashboard-cards">
+
+  <article class="card card--wide">
+    <div class="tabs">
+      <button type="button" (click)="setSource('local')" [class.active]="activeSource === 'local'">
+      💻 Local 
+    </button>
+    
+    <button type="button" (click)="setSource('cloud')" [class.active]="activeSource === 'cloud'">
+      ☁️ Cloud 
+    </button>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="successMessage()" class="alert success">
+    ✅ {{ successMessage() }}
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage() && !archiveProductId()" class="alert error">
+    ❌ {{ errorMessage() }}
+  </div>
+    <div class="card-header">
+      <div>
+        <div class="card-title">Delete Products</div>
+        <div class="card-value">{{ activeSourceLabel }}</div>
+      </div>
+      <app-svg-icon class="card-icon" name="trash"></app-svg-icon>
+    </div>
+
+    <section class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Sizes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ✅ products() - Signal with parentheses -->
+          <tr *ngFor="let product of products(); trackBy: trackByProduct">
+            <td>{{ product.id || product._id }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.description }}</td>
+            <td>
+              <img 
+                [src]="resolveImageUrl(product.imageUrl)" 
+                alt="{{ product.title }}" 
+                class="product-image"
+                (error)="product.imageUrl = 'assets/placeholder.png'"
+              />
+            </td>
+            <td>DZ {{ product.price }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.sizes.join(', ') }}</td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="deleteProduct((product.id || product._id)!)">
+                <app-svg-icon name="trash"></app-svg-icon>
+                Delete
+              </button>
+            </td>
+          </tr>
+          
+          <!-- ✅ products() - Signal with parentheses -->
+          <tr *ngIf="!products().length">
+            <td class="table-empty" colspan="8">
+              No products found in {{ activeSourceLabel }}.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </article>
+</section>
+
+<!-- ============================================ -->
+<!-- ✅ ARCHIVE MODAL - Floating Dialog           -->
+<!-- ============================================ -->
+<div *ngIf="archiveProductId()" class="modal-overlay">
+  <div class="modal-container">
+    
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="modal-icon">⚠️</div>
+      <h2>Cannot Delete Product</h2>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <p class="modal-message">
+        This product is <strong>linked to existing orders</strong> and cannot be permanently deleted.
+      </p>
+      <p class="modal-suggestion">
+        You can <strong>archive</strong> it instead. Archived products will be hidden from the main list but can be restored later if needed.
+      </p>
+      
+      <!-- Product Info -->
+      <div class="modal-product-info" *ngIf="productToArchiveValue()">
+        <div class="product-detail">
+          <span class="label">Product:</span>
+          <span class="value">{{ productToArchiveValue()?.title }}</span>
+        </div>
+        <div class="product-detail">
+          <span class="label">ID:</span>
+          <span class="value">{{ productToArchiveValue()?.id || productToArchiveValue()?._id }}</span>
+        </div>
+        <div class="product-detail">
+          <span class="label">Orders:</span>
+          <span class="value badge-danger">{{ getOrderCountForProduct() }} orders</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancelArchive()">
+        ❌ Cancel
+      </button>
+      <button type="button" class="btn btn-warning" (click)="archiveProduct(archiveProductId()!)">
+        📦 Archive Product
+      </button>
+    </div>
+
+  </div>
+</div>

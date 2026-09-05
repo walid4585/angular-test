@@ -1,0 +1,22 @@
+<div
+  class="app"
+  [class.sidebar-collapsed]="sidebarCollapsed()"
+  [class.sidebar-open]="mobileSidebarOpen()"
+>
+  <app-sidebar></app-sidebar>
+
+  <main class="main-content">
+    <app-header></app-header>
+
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
+<app-toast
+  [visible]="toast.visible()"
+  [message]="toast.message()"
+  [type]="toast.type()"
+  (closed)="toast.hide()">
+</app-toast>
+<div class="butterfly-effect"></div>

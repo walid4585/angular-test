@@ -1,0 +1,156 @@
+<section class="dashboard-cards">
+  
+  
+  <article class="card card--wide">
+    <div class="tabs">
+      <button type="button" (click)="setSource('local')" [class.active]="activeSource === 'local'">
+      💻 Local
+    </button>
+    <button type="button" (click)="setSource('cloud')" [class.active]="activeSource === 'cloud'">
+      ☁️ Cloud 
+    </button>
+
+    
+  </div>
+
+    <div *ngIf="successMessage" class="alert success">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="alert error">
+      {{ errorMessage }}
+    </div>
+
+    <div class="card-header">
+      <div>
+        <div class="card-title">Edit Products</div>
+        <div class="card-value">{{ activeSourceLabel }}</div>
+      </div>
+      <app-svg-icon class="card-icon" name="edit"></app-svg-icon>
+    </div>
+
+    <section class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Sizes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ✅ FIXED: products → products() -->
+          <tr *ngFor="let product of products(); trackBy: trackByProduct">
+            <td>{{ product.id || product._id }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.description }}</td>
+            <td>
+              <img [src]="resolveImageUrl(product.imageUrl)" alt="{{ product.title }}" class="product-image" />
+            </td>
+            <td>DZ {{ product.price }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.sizes.join(', ') }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="startEdit(product)">
+                <app-svg-icon name="edit"></app-svg-icon>
+                Edit
+              </button>
+            </td>
+          </tr>
+          <!-- ✅ FIXED: products → products() -->
+          <tr *ngIf="!products().length">
+            <td class="table-empty" colspan="8">
+              No products found in {{ activeSourceLabel }}.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </article>
+
+  <article class="card card--wide" *ngIf="editingProduct; else pickProduct">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Edit Product</div>
+        <div class="card-value">{{ editingProduct.title }}</div>
+      </div>
+      <app-svg-icon class="card-icon" name="edit"></app-svg-icon>
+    </div>
+
+    <form class="form-grid" [formGroup]="editForm" (ngSubmit)="saveEdit()" novalidate>
+      <div class="form-group">
+        <label for="edit-title">Title</label>
+        <input id="edit-title" type="text" formControlName="title" />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-price">Price</label>
+        <input id="edit-price" type="number" formControlName="price" min="0" step="0.01" />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-stock">Stock</label>
+        <input id="edit-stock" type="number" formControlName="stock" min="0" step="1" />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-active">Status</label>
+        <select id="edit-active" formControlName="active">
+          <option [ngValue]="true">Active</option>
+          <option [ngValue]="false">Inactive</option>
+        </select>
+      </div>
+
+      <div class="form-group form-group--full">
+        <label for="edit-imageUrl">Image URL</label>
+        <input
+          id="edit-imageUrl"
+          type="text"
+          formControlName="imageUrl"
+          placeholder="https://... or /uploads/..."
+        />
+      </div>
+
+      <div class="form-group form-group--full">
+        <label for="edit-description">Description</label>
+        <textarea id="edit-description" formControlName="description" rows="4"></textarea>
+      </div>
+
+      <div class="form-group form-group--full">
+        <label for="edit-sizes">Sizes</label>
+        <input id="edit-sizes" type="text" formControlName="sizesText" placeholder="S, M, L" />
+      </div>
+
+      <div class="form-group form-group--full" *ngIf="editingProduct.imageUrl">
+        <label>Current image</label>
+        <img
+          [src]="resolveImageUrl(editingProduct.imageUrl)"
+          [alt]="editingProduct.title"
+          class="product-image"
+        />
+      </div>
+
+      <div class="form-actions form-actions--full">
+        <button type="submit" class="btn btn-primary">
+          <app-svg-icon name="edit"></app-svg-icon>
+          Save Changes
+        </button>
+        <button type="button" class="btn btn-danger" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </article>
+
+  <ng-template #pickProduct>
+    <article class="card card--wide placeholder-card">
+      <h2>Select a product to edit</h2>
+      <p>Click Edit on any row to load its data from {{ activeSourceLabel }} into the form.</p>
+    </article>
+  </ng-template>
+</section>

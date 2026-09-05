@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Angular
+.angular/
+dist/
+
+# Environment variables
+.env
+.env.*
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/

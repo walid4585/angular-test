@@ -1,0 +1,35 @@
+<header class="top-navbar">
+  <div class="navbar-left">
+    <button
+      type="button"
+      class="mobile-menu-btn"
+      aria-label="Toggle sidebar"
+      (click)="toggleMobileSidebar()"
+    >
+      <app-svg-icon name="menu"></app-svg-icon>
+    </button>
+    <div class="page-title">{{ pageTitle() }}</div>
+  </div>
+
+  <div class="navbar-right">
+    <div class="search-bar">
+      <app-svg-icon name="search"></app-svg-icon>
+      <input
+        type="text"
+        [value]="searchTerm()"
+        (input)="onSearch($event)"
+        placeholder="Search orders, products..."
+        aria-label="Search orders and products"
+      />
+    </div>
+
+    <button type="button" class="notifications" aria-label="Notifications">
+      <app-svg-icon name="bell"></app-svg-icon>
+      <span class="notification-badge">3</span>
+    </button>
+
+    <button type="button" class="theme-toggle" aria-label="Toggle theme" (click)="toggleTheme()">
+      <app-svg-icon [name]="darkTheme() ? 'moon' : 'sun'"></app-svg-icon>
+    </button>
+  </div>
+</header>

@@ -1,0 +1,456 @@
+<div class="worker-details-page">
+<!-- ============================================
+     ✅ Worker Header
+============================================= -->
+
+<div *ngIf="worker() as worker" class="worker-header">
+
+    
+
+    <div class="worker-card">
+      <button
+        class="back-btn"
+        (click)="goBack()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+         Back
+
+    </button>
+
+        <div class="worker-avatar">
+
+            {{ worker.name.charAt(0).toUpperCase() }}
+
+        </div>
+
+        <div class="worker-info">
+
+            <h1>
+
+                {{ worker.name }}
+
+            </h1>
+
+            <p>
+
+                {{ worker.job }}
+
+            </p>
+
+            <span class="status">
+
+                {{ worker.active ? 'Active' : 'Inactive' }}
+
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+<app-worker-stats
+    [worker]="worker()"
+    [payments]="payments()"
+    [production]="production()">
+</app-worker-stats>
+
+
+
+<router-outlet (activate)="onChildActivate($event)"></router-outlet>
+
+
+<!-- ============================================ -->
+  <!-- ====== Payments Section ====== -->
+  <!-- ============================================ -->
+  <section class="card payments-card">
+    <div class="card-header">
+      <div class="section-header">
+        <h2>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          Cash Payments
+        </h2>
+        <span class="count-badge">{{ payments().length }} payments</span>
+      </div>
+    </div>
+
+    <div *ngIf="payments().length === 0" class="empty-state">
+      <div class="empty-content">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+        <p>No payments recorded yet</p>
+      </div>
+    </div>
+
+    <!-- ============================================
+     ✅ Payments List
+============================================= -->
+
+<div
+    class="payments-list"
+    *ngIf="payments().length > 0">
+
+    <!-- ============================================
+         ✅ Payment Item
+    ============================================= -->
+
+    <div
+        class="payment-item"
+        *ngFor="let payment of payments()">
+
+        <!-- ============================================
+             ✅ Payment Info
+        ============================================= -->
+
+        <div class="payment-left">
+
+            <div class="payment-icon">
+
+                💵
+
+            </div>
+
+            <div class="payment-info">
+
+                <span class="payment-amount">
+
+                    {{ payment.amount }} DA
+
+                </span>
+
+                <span
+                    class="payment-desc"
+                    *ngIf="payment.note">
+
+                    {{ payment.note }}
+
+                </span>
+
+                <span class="payment-date">
+
+                    📅 {{ payment.transactionDate | date:'dd/MM/yyyy' }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- ============================================
+             ✅ Payment Actions
+        ============================================= -->
+
+        <div class="payment-actions">
+
+            <!-- ============================================
+                 ✏️ Edit Payment
+            ============================================= -->
+
+            <button
+                class="action-btn edit"
+                (click)="editPayment(payment)"
+                title="Edit Payment">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="18"
+                     height="18"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+
+                </svg>
+
+            </button>
+
+            <!-- ============================================
+                 🗑️ Delete Payment
+            ============================================= -->
+
+            <button
+                class="action-btn delete"
+                (click)="deletePayment(payment)"
+                title="Delete Payment">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="18"
+                     height="18"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <polyline points="3 6 5 6 21 6"/>
+
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+
+                </svg>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <div class="payments-total">
+      <span>💰 Total Paid:</span>
+      <strong>{{ totalPaid() }} DA</strong>
+    </div>
+  </section>
+  <!-- ============================================
+     ✅ Delete Payment Modal
+============================================= -->
+
+<app-base-modal
+  [visible]="showDeletePaymentModal()"
+  title="🗑️ Delete Payment"
+  (close)="closeDeletePaymentModal()">
+
+  <div class="modal-body">
+
+    <p class="delete-message">
+      Are you sure you want to delete this payment?
+    </p>
+
+    <div *ngIf="selectedPayment() as payment" class="payment-details">
+
+      <p>
+        <strong>Amount:</strong>
+        {{ payment.amount }} DA
+      </p>
+
+      <p>
+        <strong>Date:</strong>
+        {{ payment.transactionDate | date:'dd/MM/yyyy' }}
+      </p>
+
+      <p *ngIf="payment.note">
+        <strong>Note:</strong>
+        {{ payment.note }}
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+
+    <button
+      type="button"
+      class="btn-cancel"
+      (click)="closeDeletePaymentModal()">
+
+      Cancel
+
+    </button>
+
+    <button
+      type="button"
+      class="btn-delete"
+      (click)="confirmDeletePayment()">
+
+      Delete Payment
+
+    </button>
+
+  </div>
+
+</app-base-modal>
+
+  <!-- ============================================ -->
+  <!-- ====== Financial Summary ====== -->
+  <!-- ============================================ -->
+  <section class="card summary-card">
+    <div class="card-header">
+      <h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        Financial Summary
+      </h2>
+    </div>
+    
+    <div class="summary-grid">
+      <div class="summary-item">
+        <span class="label">💰 Total Due</span>
+        <span class="value due">{{ totalDue() }} DA</span>
+      </div>
+      
+      <div class="summary-item">
+        <span class="label">✅ Total Paid</span>
+        <span class="value paid">{{ totalPaid() }} DA</span>
+      </div>
+      
+      <div class="summary-item highlight" 
+           [class.debt-positive]="debt() > 0" 
+           [class.debt-negative]="debt() < 0" 
+           [class.debt-zero]="debt() === 0">
+        <span class="label">❗ Remaining (Debt)</span>
+        <span class="value debt">
+          {{ debt() > 0 ? '🔴' : debt() < 0 ? '🟢' : '⚪' }}
+          {{ debt() }} DA
+        </span>
+      </div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar-wrapper">
+        <div class="progress-bar" 
+             [style.width.%]="totalDue() > 0 ? (totalPaid() / totalDue() * 100) : 0"
+             [class.complete]="totalDue() > 0 && (totalPaid() / totalDue() * 100) >= 100">
+          {{ totalDue() > 0 ? (totalPaid() / totalDue() * 100 | number:'1.0-0') : 0 }}%
+        </div>
+      </div>
+      <div class="progress-label">
+        <span>Payment Progress</span>
+        <span>{{ totalPaid() }} / {{ totalDue() }} DA</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- ====== Action Buttons ====== -->
+  <!-- ============================================ -->
+  <div class="actions-bar">
+    <button class="btn-primary" (click)="addPayment()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      Add Payment
+    </button>
+    
+    <button class="btn-print" (click)="printPage()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"/>
+        <path d="M18 9H6"/>
+        <path d="M6 15H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/>
+        <rect x="6" y="15" width="12" height="7"/>
+      </svg>
+      Print
+    </button>
+    <button
+  class="btn btn-secondary"
+  [routerLink]="['/workers', worker()?.id, 'history']">
+
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="18"
+       height="18"
+       viewBox="0 0 24 24"
+       fill="none"
+       stroke="currentColor"
+       stroke-width="2"
+       stroke-linecap="round"
+       stroke-linejoin="round">
+
+    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+
+  </svg>
+
+  Account History
+
+</button>
+  </div>
+
+  <app-base-modal
+    [visible]="showPaymentModal()"
+    [title]="editingPayment() ? '✏️ Edit Payment' : '💵 Add Payment'"
+    (close)="closePaymentModal()">
+<ng-container *ngIf="!paymentSuccess()">
+  
+    <form class="modal-body" [formGroup]="paymentForm">
+          
+        <div class="form-group">
+            <label>Amount (DA)</label>
+
+            <div class="input-wrapper">
+                <span class="input-prefix">DA</span>
+
+                <input
+                    type="number"
+                    formControlName="amount"
+                    placeholder="Enter amount"
+                    class="form-input">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Date</label>
+
+            <input
+                type="date"
+                formControlName="date"
+                class="form-input">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Note</label>
+
+            <textarea
+                rows="3"
+                formControlName="note"
+                class="form-input">
+            </textarea>
+
+        </div>
+
+    </form>
+
+    <div class="modal-footer">
+
+        <button
+            class="btn-cancel"
+            (click)="closePaymentModal()">
+
+            Cancel
+
+        </button>
+
+        <button
+            class="btn-save"
+            (click)="savePayment()"
+            [disabled]="paymentForm.invalid">
+
+            Save Payment
+
+        </button>
+
+    </div>
+</ng-container>
+    <ng-container *ngIf="paymentSuccess()">
+      
+    <div class="success-box">
+          <div class="success-icon">✔</div>
+          <h2>Payment Added!</h2>
+          <p>The payment has been recorded successfully.</p>
+          <div class="success-details">
+            <span>Amount: {{ paymentForm.get('amount')?.value }} DA</span>
+            <span>Date: {{ paymentForm.get('date')?.value | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+</ng-container>
+
+  </app-base-modal>
+  
+</div>

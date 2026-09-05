@@ -1,0 +1,65 @@
+<section class="dashboard-cards">
+  <article class="card" *ngFor="let stat of stats; trackBy: trackByStat">
+    <div class="card-header">
+      <div class="card-title">{{ stat.title }}</div>
+      <app-svg-icon class="card-icon" [name]="stat.icon"></app-svg-icon>
+    </div>
+    <div class="card-value">{{ stat.value }}</div>
+    <div class="card-trend">
+      <app-svg-icon class="trend-icon" [name]="stat.trendIcon"></app-svg-icon>
+      {{ stat.trend }}
+    </div>
+  </article>
+</section>
+
+<section class="charts-container">
+  <article class="chart-card">
+    <h3>Revenue Overview</h3>
+    <div class="chart-wrapper">
+      <canvas #revenueChartCanvas></canvas>
+    </div>
+  </article>
+
+  <article class="chart-card">
+    <h3>Top Products</h3>
+    <div class="chart-wrapper">
+      <canvas #productsChartCanvas></canvas>
+    </div>
+  </article>
+</section>
+
+ <div class="tabs">
+
+  <button
+    (click)="setTable('local')"
+    [class.active]="activeTable() === 'local'">
+    💻 Local Orders
+  </button>
+
+  <button
+    (click)="setTable('cloud')"
+    [class.active]="activeTable() === 'cloud'">
+    ☁️ Cloud Orders
+  </button>
+
+</div>
+
+<!-- ========================================= -->
+<!-- ✅ Cloud Orders Table                     -->
+<!-- ========================================= -->
+
+@if (activeTable() === 'cloud') {
+
+  <app-cloud-orders-table />
+
+}
+
+<!-- ========================================= -->
+<!-- ✅ Local Orders Table                     -->
+<!-- ========================================= -->
+
+@if (activeTable() === 'local') {
+
+  <app-local-orders-table></app-local-orders-table>
+
+}

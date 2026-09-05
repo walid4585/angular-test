@@ -1,0 +1,120 @@
+/* Top Navbar */
+.top-navbar {
+  position: sticky;
+  top: 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  z-index: 999;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-right: 16px;
+}
+
+.mobile-menu-btn app-svg-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.search-bar {
+  position: relative;
+}
+
+.search-bar app-svg-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.95rem;
+  height: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.search-bar input {
+  padding: 8px 12px 8px 35px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  width: min(250px, 100%);
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #ff7e5f;
+}
+
+.notifications {
+  position: relative;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.notifications app-svg-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+.theme-toggle {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.theme-toggle app-svg-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.theme-toggle:hover,
+.notifications:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

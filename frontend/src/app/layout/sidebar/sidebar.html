@@ -1,0 +1,66 @@
+<aside
+  class="sidebar"
+  [class.collapsed]="sidebarCollapsed()"
+  [class.mobile-open]="mobileSidebarOpen()"
+>
+  <div class="sidebar-header">
+    <h2 class="logo">
+      <app-svg-icon class="logo-icon" name="brand-sew"></app-svg-icon>
+      <span>SwingStyle</span>
+    </h2>
+    <button type="button" class="sidebar-toggle" (click)="toggleSidebar()" aria-label="Collapse sidebar">
+      <app-svg-icon name="menu"></app-svg-icon>
+    </button>
+  </div>
+
+  <div class="sidebar-search">
+    <app-svg-icon name="search"></app-svg-icon>
+    <input
+      type="text"
+      placeholder="Search menu..."
+      [value]="menuSearch()"
+      (input)="onSearch($event)"
+      aria-label="Search menu"
+    />
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="nav-menu">
+      <li class="nav-section" *ngFor="let section of filteredSections(); trackBy: trackSection">
+        <span class="section-title">
+          <app-svg-icon [name]="section.icon"></app-svg-icon>
+          <span>{{ section.title }}</span>
+        </span>
+
+        <ul class="nav-items">
+          <li
+            *ngFor="let item of section.items; trackBy: trackItem"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+          >
+            <a [routerLink]="item.route" (click)="closeMobileSidebar()">
+              <app-svg-icon [name]="item.icon"></app-svg-icon>
+              <span>{{ item.label }}</span>
+              <span *ngIf="item.badge" class="badge">{{ item.badge }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <img src="https://ui-avatars.com/api/?name=Admin&amp;background=a855f7&amp;color=fff" alt="Avatar" />
+      <div class="user-details">
+        <span class="user-name">Admin User</span>
+        <span class="user-role">Super Admin</span>
+      </div>
+    </div>
+
+    <button type="button" class="logout-btn" (click)="logout()">
+      <app-svg-icon name="logout"></app-svg-icon>
+      <span>Logout</span>
+    </button>
+  </div>
+</aside>

@@ -1,0 +1,78 @@
+
+<div class="section">
+
+  <div class="section-header">
+    <h2>Monthly Salary</h2>
+  </div>
+
+  <div class="info-grid">
+
+    <!-- Salary -->
+    <div class="info-card">
+      <span class="label">Salary</span>
+
+      <span class="value">
+        {{ worker?.monthlySalary ?? 0 }} DA
+      </span>
+    </div>
+
+
+    <!-- Cycle Status -->
+    <div class="info-card">
+      <span class="label">Cycle Status</span>
+
+     @if (currentCycle?.status === 'open') {
+
+        <span class="value">
+          🟢 Open
+        </span>
+
+      } @else {
+
+        <span class="value">
+          🔴 Not Started
+        </span>
+
+      }
+    </div>
+
+
+    <!-- Start Date -->
+    <div class="info-card">
+      <span class="label">Start Date</span>
+
+      <span class="value">
+       @if (currentCycle?.status === 'open') {
+
+          {{ currentCycle?.openedAt | date: 'mediumDate' }}
+
+        } @else {
+
+          —
+
+        }
+      </span>
+    </div>
+
+  </div>
+
+
+  <!-- START -->
+  @if (currentCycle?.status !== 'open') {
+
+    <div class="section-actions">
+
+      <button
+        type="button"
+        class="start-btn"
+        (click)="onStartCycle()">
+
+        START
+
+      </button>
+
+    </div>
+
+  }
+
+</div>

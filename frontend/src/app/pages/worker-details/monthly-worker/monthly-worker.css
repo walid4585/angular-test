@@ -1,0 +1,82 @@
+.section {
+    background: var(--glass-second-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px 28px 28px 28px;
+  padding: 24px 28px;
+  box-shadow: var(--shadow-soft);
+}
+
+.section-header {
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.info-card {
+    background: var(--glass-second-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all .2s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    border-color: #3b82f6;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.label {
+    font-size: .85rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    word-break: break-word;
+}
+
+/* Match the Back button styling in WorkerDetails. */
+.start-btn {
+    width: max-content;
+    padding: 10px 24px;
+    border: 1px solid var(--glass-border);
+    border-radius: 60px;
+    cursor: pointer;
+    background: var(--btn-primary);
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.start-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateX(4px);
+}

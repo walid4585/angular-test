@@ -1,0 +1,408 @@
+<!-- ============================================ -->
+<!-- ====== Add Order Component ====== -->
+<!-- ============================================ -->
+
+<div class="add-order-container">
+  
+  <!-- ============================================ -->
+  <!-- ====== Header ====== -->
+  <!-- ============================================ -->
+  <div class="component-header">
+    <div class="header-left">
+      
+      <div>
+        <h2>Create New Order</h2>
+        <p class="subtitle">Add an order for a customer</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ====== Alerts ====== -->
+  <!-- ============================================ -->
+  <div *ngIf="successMessage()" class="alert success">
+    <span class="alert-icon">✅</span>
+    {{ successMessage() }}
+  </div>
+
+  <div *ngIf="errorMessage()" class="alert error">
+    <span class="alert-icon">❌</span>
+    {{ errorMessage() }}
+  </div>
+<!-- ============================================ -->
+<!-- ====== Found Customers Modal ====== -->
+<!-- ============================================ -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showFoundCustomers()"
+>
+
+  <div class="modal">
+
+    <div class="modal-header">
+
+      <h2>Customers Found</h2>
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="showFoundCustomers.set(false)"
+      >
+        ✕
+      </button>
+
+    </div>
+
+   <div class="modal-body">
+
+  <p class="info-message">
+    We found customers with the same name.
+    Please select the correct customer from the list below.
+  </p>
+
+  <div class="warning-message">
+
+    <strong>Important</strong>
+
+    <p>
+      If this is a new customer, please enter a more specific name
+      (for example: first name + last name) and try again.
+    </p>
+
+  </div>
+
+  <div
+    class="customer-card"
+    *ngFor="let customer of foundCustomers()"
+  >
+
+    <div class="customer-info">
+
+      <h3>{{ customer.name }}</h3>
+
+      <p>
+        <strong>Phone:</strong>
+        {{ customer.phone }}
+      </p>
+
+      <p>
+        <strong>Address:</strong>
+        {{ customer.address || 'No address' }}
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="selectCustomer(customer)"
+    >
+      Use This Customer
+    </button>
+
+  </div>
+
+</div>
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="noneOfTheseCustomers()"
+      >
+        None of these customers
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+  <!-- ============================================ -->
+  <!-- ====== Form ====== -->
+  <!-- ============================================ -->
+ <form class="form-grid">
+    
+    <div class="form-group">
+      <label for="customer">Customer Name</label>
+      <input
+        type="text"
+        id="customer"
+        name="customer"
+        [ngModel]="customerName()"
+       (ngModelChange)="customerName.set($event)"
+        [disabled]="isWalkInCustomer()"
+        placeholder="Enter customer name"
+        required
+      />
+      <div class="form-group form-actions--full walk-in-option">
+      <label for="walkInCustomer">
+        <input
+          type="checkbox"
+          id="walkInCustomer"
+          name="walkInCustomer"
+          [ngModel]="isWalkInCustomer()"
+          (ngModelChange)="onWalkInCustomerChange($event)"
+          class="walkInCustomer"
+        />
+        Walk-in Customer
+      </label>
+    </div>
+      @if (customerNameError()) {
+
+      <small class="field-error">
+
+           {{ customerNameError() }}
+
+      </small>
+
+     }
+    </div>
+
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        [ngModel]="phone()"
+        (ngModelChange)="phone.set($event)"
+        [disabled]="isWalkInCustomer()"
+        placeholder="Enter phone number"
+      />
+       @if (phoneError()) {
+
+      <small class="field-error">
+
+           {{ phoneError() }}
+
+      </small>
+
+     }
+    </div>
+
+    <div class="form-group">
+      <label for="address">Delivery Address</label>
+      <input
+        type="text"
+        id="address"
+        name="address"
+        [ngModel]="address()"
+        (ngModelChange)="address.set($event)"
+        [disabled]="isWalkInCustomer()"
+        placeholder="Enter delivery address"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="product">Select Product</label>
+      <select
+        id="product"
+        [ngModel]="productId()"
+        (ngModelChange)="productId.set($event); calculateTotal()"
+        name="productId"
+        
+        required
+      >
+  
+        <option [ngValue]="null" disabled>Select a product</option>
+        <option *ngFor="let p of products()" [ngValue]="normalizeProductId(p.id)">
+          {{ p.title }} - {{ p.price }} DA
+        </option>
+      </select>
+          @if (productError()) {
+
+  <small class="field-error">
+
+    {{ productError() }}
+
+  </small>
+
+}
+    </div>
+
+    <div class="form-group">
+      <label for="size">Size</label>
+      <input
+        type="text"
+        id="size"
+        name="size"
+        [ngModel]="size()"
+        (ngModelChange)="size.set($event)"
+        placeholder="S, M, L, XL"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="price">Unit Price</label>
+      <input
+        type="number"
+        id="price"
+        name="price"
+        [ngModel]="price()"
+        (ngModelChange)="price.set($event); calculateTotal()"
+        placeholder="Enter unit price"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input
+        type="number"
+        id="quantity"
+        name="quantity"
+        [ngModel]="quantity()"
+       (ngModelChange)="quantity.set($event); calculateTotal()"
+        
+        min="1"
+        placeholder="Enter quantity"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="totalPrice">Total Price</label>
+      <input
+        type="number"
+        id="totalPrice"
+        name="totalPrice"
+        [value]="totalPrice()"
+        readonly
+        class="readonly-field"
+      />
+    </div>
+
+    <div class="form-actions form-actions--full">
+      <button type="button" (click)="addOrder()" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        Add Order to List
+      </button>
+      <button type="reset" class="btn btn-secondary" (click)="resetForm()">
+        Reset
+      </button>
+    </div>
+  </form>
+
+  <section class="pending-orders" *ngIf="pendingOrders().length">
+    <div class="pending-orders-header">
+      <div>
+        <h3>Orders for {{ selectedCustomer()?.name }}</h3>
+        <span>{{ pendingOrders().length }} item(s) · Total: {{pendingTotal }} DA</span>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="sendAllOrders()" [disabled]="isSubmitting()">
+        {{isSubmitting() ? 'Sending...' : 'Send All Orders' }}
+      </button>
+    </div>
+
+    <div class="pending-order" *ngFor="let order of pendingOrders(); let i = index">
+      <div>
+        <strong>{{ products().find(p => normalizeProductId(p.id) === order.productId)?.title }}</strong>
+        <span>Size: {{ order.size || '---' }} · Quantity: {{ order.quantity }}</span>
+      </div>
+      <div class="pending-order-actions">
+        <strong>{{ order.price * order.quantity }} DA</strong>
+        <button type="button" class="remove-order" (click)="removePendingOrder(i)">Remove</button>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- ============================================ -->
+<!-- ====== Phone Confirmation Modal ====== -->
+<!-- ============================================ -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showPhoneConfirmation()"
+>
+
+  <div class="modal">
+
+    <div class="modal-header">
+
+      <h2>Customer Found</h2>
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="showPhoneConfirmation.set(false)"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div class="warning-message">
+
+        <strong>Phone number already exists.</strong>
+
+        <p>
+          A customer with this phone number was found.
+          Please confirm whether this is the same customer.
+        </p>
+
+      </div>
+
+      <div class="customer-card">
+
+        <div class="customer-info">
+
+          <h3>{{ phoneCustomer()?.name }}</h3>
+
+          <p>
+            <strong>Phone:</strong>
+            {{ phoneCustomer()?.phone }}
+          </p>
+
+          <p>
+            <strong>Address:</strong>
+            {{ phoneCustomer()?.address || 'No address' }}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="confirmPhoneCustomer()"
+      >
+        Yes, This Is The Customer
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="rejectPhoneCustomer()"
+      >
+        No, Different Customer
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

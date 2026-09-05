@@ -1,0 +1,65 @@
+.toast {
+
+  position: fixed;
+
+  top: 20px;
+
+  right: 20px;
+
+  min-width: 320px;
+
+  padding: 14px 18px;
+
+  border-radius: 10px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  color: white;
+
+  z-index: 5000;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+
+}
+
+.success {
+
+  background: #16a34a;
+
+}
+
+.error {
+
+  background: #dc2626;
+
+}
+
+.warning {
+
+  background: #d97706;
+
+}
+
+.info {
+
+  background: #2563eb;
+
+}
+
+.close-btn {
+
+  background: transparent;
+
+  border: none;
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+}

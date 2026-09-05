@@ -1,0 +1,52 @@
+<section class="table-container">
+ 
+  <h3>Cloud Orders</h3>
+  <table class="orders-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Size</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+        <th>Status</th>
+        <th>Order Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="orders() as orders">
+        <tr *ngIf="loadingOrders()">
+          <td class="table-empty" colspan="9">Loading orders...</td>
+        </tr>
+
+        <tr *ngFor="let order of orders; trackBy: trackByOrder">
+          <td>{{ order.id }}</td>
+          <td>{{ order.customerName }}</td>
+          <td>{{ order.phone }}</td>
+          <td>{{ order.address }}</td>
+          <td>{{ order.size }}</td>
+          <td>{{ order.product }}</td>
+          <td>{{order.price}}</td>
+          <td>{{ order.quantity }}</td>
+          <td>{{order.totalPrice}}</td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+              {{ order.status | titlecase }}
+            </span>
+          </td>
+          <td>{{ order.orderDate | date: 'short' }}</td>
+        </tr>
+
+        <tr *ngIf="!loadingOrders() && orders.length === 0">
+          <td class="table-empty" colspan="11">
+            No cloud orders match your search.
+         </td>     
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</section>
